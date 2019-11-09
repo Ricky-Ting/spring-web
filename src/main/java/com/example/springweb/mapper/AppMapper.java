@@ -48,9 +48,9 @@ public interface AppMapper {
     })
     MyAppInfo getOne(String AppId);
 
-    @Update("update appinfo set user_name = #{name}, password = #{password} where StringId = #{id}")
+    @Update("update appinfo set UserId = #{UserId}, AppName = #{AppName}, Classifier = #{Classifier}, Security = #{Security}  where AppId = #{AppId}")
     void updateByID(MyAppInfo helloUser);//UPDATE 表名称 SET 列名称 = 新值 WHERE 列名称 = 某值
 
-    @Delete("delete from appinfo where StringId = #{id}")
+    @Delete("delete from appinfo where AppId = #{AppId}")
     void deleteByID(String id);//DELETE FROM 表名称 WHERE 列名称 = 值
 }
