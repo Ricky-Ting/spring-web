@@ -29,6 +29,10 @@ public class HelloService {
         helloMapper.insert(helloUser);
     }
 
+    public void InsertUser(HelloUser inserted_user){
+        helloMapper.insert(inserted_user);
+    }
+
 
     public HelloUser getOne(String id){
         //HelloUser result = new HelloUser();
@@ -36,9 +40,9 @@ public class HelloService {
         System.out.println("getOne:"+result);
         if (result==null)
         {
-            result=new HelloUser();//索引为空的时候，返回null，需要这时候对其getId,getName就会出错。
+            //result=new HelloUser();//索引为空的时候，返回null，需要这时候对其getId,getName就会出错。
         }
-        System.out.println(result.toString());
+        //System.out.println(result.toString());
         return result;
     }
 
@@ -65,4 +69,22 @@ public class HelloService {
         helloMapper.deleteByID(id);
         System.out.println("AfterDelete:"+helloMapper.getOne(id));
     }
+
+    public boolean Check_User(HelloUser checked_user) {
+        String UserId = checked_user.getId();
+        String Username = checked_user.getName();
+        String passwd = checked_user.getPassword();
+        if(UserId==null || Username==null || passwd==null)
+            return false;
+        if(Username.length()>=40 || UserId.length()>=40 || passwd.length()>=40)
+            return false;
+
+        HelloUser exist_user = helloMapper.getOne(UserId);
+        if(exist_user!=null) return false;
+
+
+        return true;
+    }
+
+
 }

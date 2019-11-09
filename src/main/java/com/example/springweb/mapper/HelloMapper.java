@@ -10,7 +10,8 @@ public interface HelloMapper {
     @Select("select * from user ")
     @Results({
             @Result(property = "id", column = "stringId"),
-            @Result(property = "name", column = "user_name")
+            @Result(property = "name", column = "user_name"),
+            @Result(property = "password", column = "password")
     })
     List<HelloUser> findAll();
 
@@ -21,7 +22,8 @@ public interface HelloMapper {
     @Select("select * from user where stringId = #{id}")
     @Results({
             @Result(property = "id",column = "stringId"),
-            @Result(property = "name",column = "user_name")
+            @Result(property = "name",column = "user_name"),
+            @Result(property = "password", column = "password")
     })
     HelloUser getOne(String id);
 

@@ -1,10 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
+
+<p class="lead" th:text="${user_name}+'用户，您好'">(greeting)</p>
+
+
+<form action="/SubmitAppInfo" method="post">
+    AppId:  <input type="text" name="AppId">  <br>
+    <input type="hidden" name="UserId" th:value="${user_id}"> <br>
+    AppName: <input type="text" name="AppName">  <br>
+    Classifier:
+    <select name="Classifier">
+        <option value=1>基础共性工业APP</option>
+        <option value=2>行业通用工业APP</option>
+        <option value=3>企业专用工业APP</option>
+        <option value=4>其他工业APP</option>
+    </select>     <br>
+    Security:
+    <select name="Security">
+        <option value=1>一级</option>
+        <option value=2>二级</option>
+        <option value=3>三级</option>
+        <option value=4>四级</option>
+        <option value=4>五级</option>
+    </select>  <br>
+    <input type="submit" value="Submit">
+</form>
+
 
 </body>
 </html>

@@ -6,7 +6,12 @@
 </head>
 <body>
 
-<p>hello world html</p>
-<p class="lead" th:text="${greeting}">(greeting)</p>
+<p class="lead" th:text="${user_name}+'用户，您好'">(greeting)</p>
+
+<form action="/NewAppInfo" method="post">
+    <input type="hidden" name="UserId" th:value="${user_id}">
+    <input type="hidden" name="UserName" th:value="${user_name}">
+    <button type="submit">新建申请</button>
+</form>
 </body>
 </html>

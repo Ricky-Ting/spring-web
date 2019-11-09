@@ -25,6 +25,19 @@ public class AppService {
         helloMapper.insert(helloUser);
         System.out.println("Afterinsert:"+helloMapper.findAll());
     }*/
+
+    public boolean CheckAppInfo(MyAppInfo check_AppInfo) {
+        String App_Id = check_AppInfo.getAppId();
+        String User_Id = check_AppInfo.getUserId();
+        String App_Name = check_AppInfo.getAppName();
+        if(App_Id==null || User_Id==null || App_Name==null)
+            return false;
+        MyAppInfo exist_appinfo= appMapper.getOne(App_Id);
+        if(exist_appinfo==null) return false;
+        return true;
+    }
+
+
     public void InsertAppInfo(Map<String, String> params){
        // ObjectMapper objectMapper = new ObjectMapper();
         //MyAppInfo newAppinfo = objectMapper.convertValue(params, MyAppInfo.class);
@@ -37,6 +50,12 @@ public class AppService {
         appMapper.insert(newAppinfo);
     }
 
+    public void InsertAppInfo(MyAppInfo Inserted_app_info){
+        // ObjectMapper objectMapper = new ObjectMapper();
+        //MyAppInfo newAppinfo = objectMapper.convertValue(params, MyAppInfo.class);
+        appMapper.insert(Inserted_app_info);
+    }
+
 
     public MyAppInfo getOne(String AppId){
         //HelloUser result = new HelloUser();
@@ -44,22 +63,15 @@ public class AppService {
         System.out.println("getOne:"+result);
         if (result==null)
         {
-            result=new MyAppInfo();//索引为空的时候，返回null，需要这时候对其getId,getName就会出错。
+            //result=new MyAppInfo();//索引为空的时候，返回null，需要这时候对其getId,getName就会出错。
         }
-        System.out.println(result.toString());
+        //System.out.println(result.toString());
         return result;
     }
 
-    /*public void UpdateByID(HelloUser helloUser){
-        helloMapper.updateByID(helloUser);
-        System.out.println("AfterUpdate:"+ helloMapper.getOne(helloUser.getId()));
-    }*/
+
     public void UpdateByID(Map<String, String> params){
         String AppId = params.get("AppId");
-        //Long recordId = Long.parseLong(params.get("recordId"));
-        //ObjectMapper objectMapper = new ObjectMapper();
-        //HelloUser helloUser = objectMapper.convertValue(params, HelloUser.class);
-        //helloMapper.updateByID(helloUser);
         MyAppInfo temp = appMapper.getOne(AppId);
         if(params.get("AppName")!=null)
             temp.setAppName(params.get("AppName"));
@@ -72,6 +84,10 @@ public class AppService {
         appMapper.updateByID(temp);
     }
 
+
+    public void UpdateByID(MyAppInfo updated_appinfo){
+        appMapper.updateByID(updated_appinfo);
+    }
 
     public void DeleteByID(String AppId){
         appMapper.deleteByID(AppId);
