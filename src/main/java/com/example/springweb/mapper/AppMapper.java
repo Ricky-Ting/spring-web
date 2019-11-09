@@ -6,7 +6,6 @@ import org.apache.ibatis.annotations.*;
 import java.util.List;
 
 
-
 /*
 *   App表的结构：
 *   create table appinfo (
