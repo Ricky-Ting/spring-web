@@ -65,6 +65,12 @@ public class HelloService {
     }
 
 
+
+    public void UpdateByID(HelloUser update_user){
+        helloMapper.updateByID(update_user);
+    }
+
+
     public void DeleteByID(String id){
         helloMapper.deleteByID(id);
         System.out.println("AfterDelete:"+helloMapper.getOne(id));
@@ -76,7 +82,7 @@ public class HelloService {
         String passwd = checked_user.getPassword();
         if(UserId==null || Username==null || passwd==null)
             return false;
-        if(Username.length()>=40 || UserId.length()>=40 || passwd.length()>=40)
+        if(Username.length()>=40 || UserId.length()>=40 || passwd.length()>=40 || Username.equals("") || UserId.equals("") || passwd.equals(""))
             return false;
 
         HelloUser exist_user = helloMapper.getOne(UserId);

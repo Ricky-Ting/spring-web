@@ -14,10 +14,10 @@ import java.util.Map;
 public class AppService {
     @Resource
     private AppMapper appMapper;
-    static Integer cnt=0;
 
-    public List<MyAppInfo> getUserList() {
-        List<MyAppInfo> list = appMapper.findAll();
+    public List<MyAppInfo> getAppinfoList(String UserId) {
+        List<MyAppInfo> list = appMapper.findAll(UserId);
+
         return list;
     }
 
@@ -30,10 +30,10 @@ public class AppService {
         String App_Id = check_AppInfo.getAppId();
         String User_Id = check_AppInfo.getUserId();
         String App_Name = check_AppInfo.getAppName();
-        if(App_Id==null || User_Id==null || App_Name==null)
+        if(App_Id==null || User_Id==null || App_Name==null || App_Id.equals("") || User_Id.equals("") || App_Name.equals(""))
             return false;
         MyAppInfo exist_appinfo= appMapper.getOne(App_Id);
-        if(exist_appinfo==null) return false;
+        if(exist_appinfo!=null) return false;
         return true;
     }
 

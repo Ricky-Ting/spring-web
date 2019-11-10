@@ -23,7 +23,7 @@ import java.util.List;
 
 @Mapper
 public interface AppMapper {
-    @Select("select * from appinfo")
+    @Select("select * from appinfo where UserId = UserId")
     @Results({
             @Result(property = "AppId", column = "AppId"),
             @Result(property = "UserId", column = "UserId"),
@@ -31,7 +31,7 @@ public interface AppMapper {
             @Result(property = "Classifier", column = "Classifier"),
             @Result(property = "Security", column = "Security")
     })
-    List<MyAppInfo> findAll();
+    List<MyAppInfo> findAll(String UserId);
 
     @Insert("insert into appinfo(AppId,UserId,AppName,Classifier,Security) values(#{AppId},#{UserId},#{AppName},#{Classifier},#{Security})")
     void insert(MyAppInfo newAppInfo);

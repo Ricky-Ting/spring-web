@@ -18,37 +18,65 @@ public class AppController {
 
 
 
-    @RequestMapping("NewAppInfo")
-    public String newAppInfo(String UserId, String UserName, Model model) {
+    @RequestMapping("/JmpToAppInfoList")
+    public String JmpToAppInfoList(String UserId, String UserName, Model model) {
         model.addAttribute("user_id",UserId);
         model.addAttribute("user_name",UserName);
-        return "AppInfo";
+        model.addAttribute("appinfoList",appService.getAppinfoList(UserId));
+        logger.info("AppInfoList" +appService.getAppinfoList(UserId));
+        return "AppInfoList";
+    }
+
+    @RequestMapping("/JmpToDeleteAppInfo")
+    public String JmpToDeleteAppInfo(String UserId, String UserName, Model model) {
+        model.addAttribute("user_id",UserId);
+        model.addAttribute("user_name",UserName);
+        return "deleteAppInfo";
+    }
+
+
+
+
+    @RequestMapping("/NewAppInfo")
+    public String newAppInfo(String UserId, String UserName, Model model) {
+        logger.info("In newAppInfo " +UserId+","+UserName );
+        model.addAttribute("user_id",UserId);
+        model.addAttribute("user_name",UserName);
+        return "newAppInfo";
     }
 
     @RequestMapping("/SubmitAppInfo")
-    public String appInfoSubmit(String AppId, String UserId, String AppName, Integer Classifier, Integer Security, Model model) {
+    public String appInfoSubmit(String AppId, String UserId, String UserName, String AppName, Integer Classifier, Integer Security, Model model) {
         logger.info("AppInfo Receive " + AppId + "," + UserId + "," + AppName + "," + String.valueOf(Classifier) + "," + String.valueOf(Security) );
         MyAppInfo NewAppInfo = new MyAppInfo(AppId,UserId,AppName,Classifier,Security);
         if(appService.CheckAppInfo(NewAppInfo)) {
             appService.InsertAppInfo(NewAppInfo);
-            return "hello";
+            model.addAttribute("user_id",UserId);
+            model.addAttribute("user_name",UserName);
+            model.addAttribute("AppInfoMessage","恭喜您，您的申请已成功提交");
+            return "user_main";
         }else {
             model.addAttribute("AppInfoErrorMessage","对不起，您填写的信息不符合规范请重新填写");
-            return "AppInfo";
+            model.addAttribute("user_id",UserId);
+            model.addAttribute("user_name",UserName);
+            return "newAppInfo";
         }
 
     }
 
 
     @RequestMapping("/DeleteAppInfo")
-    public String deleteAppInfo(String AppId, String UserId) {
+    public String deleteAppInfo(String AppId, String UserId, String UserName,Model model) {
+        model.addAttribute("user_id",UserId);
+        model.addAttribute("user_name",UserName);
         MyAppInfo deleted_appinfo = appService.getOne(AppId);
         if(deleted_appinfo!=null && deleted_appinfo.getUserId().equals(UserId)) {
             appService.DeleteByID(AppId);
-            return "hello";
+            model.addAttribute("DeleteAppInfoErrorMessage","成功删除");
+            return "deleteAppInfo";
         } else {
-            //非本人
-            return "hello";
+            model.addAttribute("DeleteAppInfoErrorMessage","申请不存在或非本人申请");
+            return "deleteAppInfo";
         }
     }
 
@@ -63,6 +91,8 @@ public class AppController {
             return "hello";
         }
     }
+
+
 
 
 }
