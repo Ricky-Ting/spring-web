@@ -45,10 +45,12 @@ public class HelloController {
     @RequestMapping("/UserLogin")
     public String User_Login(String id, String name, String password, Model model) {
         logger.info("Login Receive " + id + "," +name +"," + password );
-        if(id==null || name==null || password==null) {model.addAttribute("LoginErrorMessage","所有字段均不能为空");  return "index";}
+        if(id==null || name==null || password==null) {
+            model.addAttribute("LoginErrorMessage","所有字段均不能为空");
+            return "index";
+        }
         HelloUser newUserLogin = helloService.getOne(id);
         if(newUserLogin==null) {model.addAttribute("LoginErrorMessage","您还尚未注册"); return "index";}
-
         if(id.equals(newUserLogin.getId()) && name.equals(newUserLogin.getName()) && password.equals(newUserLogin.getPassword())) {
             logger.info("hello logging " + newUserLogin);
             model.addAttribute("user_name", name);
@@ -103,7 +105,10 @@ public class HelloController {
     public String RevisePasswd(String id, String name, String Oldpasswd, String Newpasswd, String Newpasswd2, Model model) {
         model.addAttribute("user_name", name);
         model.addAttribute("user_id",id);
-        if(id==null || name==null || Oldpasswd==null || Newpasswd==null || Newpasswd2==null || Newpasswd.equals("") ) { model.addAttribute("RevisePassErrorMessage","字段不能为空"); return "RevisePassword";}
+        if(id==null || name==null || Oldpasswd==null || Newpasswd==null || Newpasswd2==null || Newpasswd.equals("") ) {
+            model.addAttribute("RevisePassErrorMessage","字段不能为空");
+            return "RevisePassword";
+        }
         if(!Newpasswd.equals(Newpasswd2)) {
             model.addAttribute("RevisePassErrorMessage","新密码不一致");
                     return "RevisePassword";

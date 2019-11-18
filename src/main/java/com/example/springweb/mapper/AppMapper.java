@@ -9,11 +9,11 @@ import java.util.List;
 /*
 *   App表的结构：
 *   create table appinfo (
-*       AppId           char(40),
-*       UserId          char(40),
-*       AppName         char(40),
-*       Classifier      int,
-*       Security        int,
+*       AppId           char(40)    NOT NULL   PRIMARY KEY,
+*       UserId          char(40)    NOT NULL,
+*       AppName         char(40)    NOT NULL,
+*       Classifier      int         NOT NULL,
+*       Security        int         NOT NULL
 *   );
 *
 *
@@ -48,7 +48,7 @@ public interface AppMapper {
     MyAppInfo getOne(String AppId);
 
     @Update("update appinfo set UserId = #{UserId}, AppName = #{AppName}, Classifier = #{Classifier}, Security = #{Security}  where AppId = #{AppId}")
-    void updateByID(MyAppInfo helloUser);//UPDATE 表名称 SET 列名称 = 新值 WHERE 列名称 = 某值
+    void updateByID(MyAppInfo update_appinfo);//UPDATE 表名称 SET 列名称 = 新值 WHERE 列名称 = 某值
 
     @Delete("delete from appinfo where AppId = #{AppId}")
     void deleteByID(String id);//DELETE FROM 表名称 WHERE 列名称 = 值

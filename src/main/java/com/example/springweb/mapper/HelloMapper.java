@@ -5,6 +5,18 @@ import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
+/*
+create table user (
+    id      char(40)    NOT NULL PRIMARY KEY,
+    name    char(40)    NOT NULL,
+    password char(40)   NOT NULL
+);
+
+
+ */
+
+
+
 @Mapper
 public interface HelloMapper {
     @Select("select * from user ")
