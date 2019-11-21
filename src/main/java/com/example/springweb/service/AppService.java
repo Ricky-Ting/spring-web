@@ -21,11 +21,6 @@ public class AppService {
         return list;
     }
 
-    /*public void InsertUser(HelloUser helloUser){
-        helloMapper.insert(helloUser);
-        System.out.println("Afterinsert:"+helloMapper.findAll());
-    }*/
-
     public boolean CheckAppInfo(MyAppInfo check_AppInfo) {
         String App_Id = check_AppInfo.getAppId();
         String User_Id = check_AppInfo.getUserId();
@@ -38,17 +33,7 @@ public class AppService {
     }
 
 
-    public void InsertAppInfo(Map<String, String> params){
-       // ObjectMapper objectMapper = new ObjectMapper();
-        //MyAppInfo newAppinfo = objectMapper.convertValue(params, MyAppInfo.class);
-        MyAppInfo newAppinfo = new MyAppInfo();
-        newAppinfo.setAppId(params.get("AppId"));
-        newAppinfo.setUserId(params.get("UserId"));
-        newAppinfo.setAppName(params.get("AppName"));
-        newAppinfo.setClassifier(Integer.parseInt(params.get("Classifier")));
-        newAppinfo.setSecurity(Integer.parseInt((params.get("Security"))));
-        appMapper.insert(newAppinfo);
-    }
+
 
     public void InsertAppInfo(MyAppInfo Inserted_app_info){
         // ObjectMapper objectMapper = new ObjectMapper();
@@ -70,19 +55,8 @@ public class AppService {
     }
 
 
-    public void UpdateByID(Map<String, String> params){
-        String AppId = params.get("AppId");
-        MyAppInfo temp = appMapper.getOne(AppId);
-        if(params.get("AppName")!=null)
-            temp.setAppName(params.get("AppName"));
-        if(params.get("UserId")!=null)
-            temp.setUserId((params.get("UserId")));
-        if(Integer.parseInt(params.get("Classifier"))!=-1)
-            temp.setClassifier((Integer.parseInt(params.get("Classifier"))));
-        if(Integer.parseInt(params.get("Security"))!=-1)
-            temp.setSecurity((Integer.parseInt(params.get("Security"))));
-        appMapper.updateByID(temp);
-    }
+
+
 
 
     public void UpdateByID(MyAppInfo updated_appinfo){

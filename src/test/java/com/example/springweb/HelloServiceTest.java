@@ -10,6 +10,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Iterator;
 import java.util.Map;
 
 import static org.junit.Assert.*;
@@ -21,46 +22,79 @@ public class HelloServiceTest {
     HelloService helloService;
 
     @Test
-    public void getUsers() {
-        List<HelloUser> users = helloService.getUserList();
-        assertFalse("User not null", users == null);
-        assertNotNull(users);
-        assertNotEquals(users.size(), 0);
-        assertEquals(users.get(0).getName(), "lgy");
+    public void testInsertUser() throws Exception{
+        Integer sz = helloService.getUserList().size();
+        HelloUser inserted_user = new HelloUser("test_Insert","TestUser","TestPassword");
+        helloService.InsertUser(inserted_user);
+        HelloUser inserted_user2 = new HelloUser("test_Insert2","TestUser2","TestPassword");
+        helloService.InsertUser(inserted_user2);
+        assertEquals(helloService.getUserList().size(),sz+2);
+
     }
 
     @Test
-    public void testInsert() throws Exception{
-        //helloService.InsertUser(new HelloUser("4","zyy","dsb"));
-       // assertEquals(helloService.getUserList().size(),3);
-        Map<String,String> params=new HashMap<>();
-        params.put("id","4");
-        params.put("name","niha");
-        params.put("password","yes");
-        helloService.InsertUser(params);
-        assertEquals(helloService.getUserList().size(),4);
+    public void testGetOne()  throws Exception{
+        HelloUser helloUser = helloService.getOne("test_Insert");
+        assertEquals(helloUser.getName(),"TestUser");
+        HelloUser helloUser2 = helloService.getOne("test_Insert2");
+        assertEquals(helloUser2.getName(),"TestUser2");
+
     }
 
     @Test
-    public void testGetOne() throws Exception{
-        HelloUser helloUser = helloService.getOne("9");
-        assertEquals(helloUser.getName(),null);
+    public void testUpdateByID() throws Exception{
+        HelloUser updated_user = new HelloUser("test_Insert","UpdatedUser","UpdatePassword");
+        helloService.UpdateByID(updated_user);
+        assertEquals(helloService.getOne("test_Insert").getName(),"UpdatedUser");
+
+        updated_user.setId("test_Insert2"); updated_user.setName("UpdatedUser2");
+        helloService.UpdateByID(updated_user);
+        assertEquals(helloService.getOne("test_Insert2").getName(),"UpdatedUser2");
+    }
+
+
+
+    @Test
+    public void testCheck_User() throws Exception{
+        HelloUser check_user = new HelloUser("test_Insert","balabla","pass");
+        assertEquals(helloService.Check_User(check_user),false);
+        check_user.setId("Noneexists");
+        assertEquals(helloService.Check_User(check_user),true);
+    }
+
+
+    @Test
+    public void testgetUserList() throws Exception {
+        List<HelloUser> list = helloService.getUserList();
+        boolean flag =false;
+        for(Integer i=0;i<list.size();i++) {
+            if(list.get(i).getName().equals("UpdatedUser"))
+                flag=true;
+        }
+        assertTrue(flag);
+
+        flag =false;
+        for(Integer i=0;i<list.size();i++) {
+            if(list.get(i).getName().equals("UpdatedUser2"))
+                flag=true;
+        }
+        assertTrue(flag);
+
+
+
     }
 
     @Test
-    public void testUpdate() throws Exception{
-       // helloService.UpdateByID(new HelloUser("3","ooo","bbbb"));
-       // assertEquals(helloService.getOne("3").getName(),"ooo");
-        Map<String,String> params=new HashMap<>();
-        params.put("id","4");
-        params.put("name","yyy");
-        helloService.UpdateByID(params);
-        assertEquals(helloService.getOne("4").getName(),"yyy");
+    public void testDeleteByID() throws Exception{
+        Integer sz = helloService.getUserList().size();
+        helloService.DeleteByID("test_Insert");
+        helloService.DeleteByID("test_Insert2");
+        assertEquals(helloService.getUserList().size(),sz-2);
+
     }
 
-    @Test
-    public void testDelete() throws Exception{
-        helloService.DeleteByID("4");
-        assertEquals(helloService.getOne("4").getName(),null);
-    }
+
+
+
 }
+

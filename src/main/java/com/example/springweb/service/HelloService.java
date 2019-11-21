@@ -19,15 +19,8 @@ public class HelloService {
         return list;
     }
 
-    /*public void InsertUser(HelloUser helloUser){
-        helloMapper.insert(helloUser);
-        System.out.println("Afterinsert:"+helloMapper.findAll());
-    }*/
-    public void InsertUser(Map<String, String> params){
-        ObjectMapper objectMapper = new ObjectMapper();
-        HelloUser helloUser = objectMapper.convertValue(params, HelloUser.class);
-        helloMapper.insert(helloUser);
-    }
+
+
 
     public void InsertUser(HelloUser inserted_user){
         helloMapper.insert(inserted_user);
@@ -45,25 +38,6 @@ public class HelloService {
         //System.out.println(result.toString());
         return result;
     }
-
-    /*public void UpdateByID(HelloUser helloUser){
-        helloMapper.updateByID(helloUser);
-        System.out.println("AfterUpdate:"+ helloMapper.getOne(helloUser.getId()));
-    }*/
-    public void UpdateByID(Map<String, String> params){
-        String id = params.get("id");
-        //Long recordId = Long.parseLong(params.get("recordId"));
-        //ObjectMapper objectMapper = new ObjectMapper();
-        //HelloUser helloUser = objectMapper.convertValue(params, HelloUser.class);
-        //helloMapper.updateByID(helloUser);
-        HelloUser temp = helloMapper.getOne(id);
-        if(params.get("name")!=null)
-            temp.setName(params.get("name"));
-        if(params.get("password")!=null)
-            temp.setPassword((params.get("password")));
-        helloMapper.updateByID(temp);
-    }
-
 
 
     public void UpdateByID(HelloUser update_user){
@@ -87,8 +61,6 @@ public class HelloService {
 
         HelloUser exist_user = helloMapper.getOne(UserId);
         if(exist_user!=null) return false;
-
-
         return true;
     }
 
